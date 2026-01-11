@@ -11,7 +11,7 @@
         </li>
         {{#breadcrumbs}}
         <li>
-          <a href="{{route}}">{{name}}</a>
+          <a href="/{{route}}">{{name}}</a>
         </li>
         {{/breadcrumbs}}
       </ul>
@@ -20,7 +20,19 @@
     <h2>Upload</h2>
     <form method="POST" enctype="multipart/form-data">
       <input type="file" name="filefield"/>
+      <input type="checkbox" checked name="createFile" hidden />
       <button>Upload</button>
+    </form>
+
+    <h2>Create Folder</h2>
+    <form method="POST">
+      <input
+        type="text"
+        name="folderName"
+        pattern="^[a-zA-Z0-9\-_ ]+$"
+      >
+      <input type="checkbox" checked name="createFolder" hidden />
+      <button>Create Folder</button>
     </form>
 
     <h2>Files</h2>
@@ -28,10 +40,10 @@
       {{#files}}
       <li>
         {{#isDir}}
-        <a href="{{route}}">{{name}}</a>
+        <a href="/{{route}}">{{name}}</a>
         {{/isDir}}
         {{#isFile}}
-        <a href="{{route}}" download="{{name}}">{{name}}</a>
+        <a href="/{{route}}" download="{{name}}">{{name}}</a>
         {{/isFile}}
       </li>
       {{/files}}

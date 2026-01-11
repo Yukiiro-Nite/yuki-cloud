@@ -8,6 +8,8 @@ import { renderDirPage } from './dirPage.js'
 const port = process.env.PORT || 3000
 const storageRoot = process.env.STORAGE_ROOT || path.join(process.cwd(), 'storage')
 const app = express()
+const folderPathRegex = /^[a-zA-Z0-9\-_ ]+$/
+app.use(express.urlencoded({ extended: true }))
 
 if (!fs.existsSync(storageRoot)) {
   console.error(`Storage directory does not exist at ${storageRoot}`)
@@ -16,10 +18,11 @@ if (!fs.existsSync(storageRoot)) {
 }
 
 app.get("/{*splat}", (req, res) => {
-  const reqPath = req.path
+  const reqPath = decodeURI(req.path)
   const storagePath = path.join(storageRoot, reqPath)
   const relativePath = path.relative(storageRoot, storagePath)
   const exists = fs.existsSync(storagePath)
+  console.log(`Checking for file or folder at ${relativePath}`)
   if (!exists) {
     res.status(404).send("File not found!")
     return
@@ -29,6 +32,7 @@ app.get("/{*splat}", (req, res) => {
   const isDir = stats.isDirectory()
 
   if (isDir) {
+    console.log(`Fetching folder contents for: ${relativePath}`)
     const dirHTML = renderDirPage(
       storageRoot,
       storagePath,
@@ -39,11 +43,12 @@ app.get("/{*splat}", (req, res) => {
     return
   }
 
+  console.log(`Downloading ${relativePath}`)
   res.download(storagePath)
 })
 
 app.post("/{*splat}", async (req, res) => {
-  const reqPath = req.path
+  const reqPath = decodeURI(req.path)
   const storagePath = path.join(storageRoot, reqPath)
   const relativePath = path.relative(storageRoot, storagePath)
   const exists = fs.existsSync(storagePath)
@@ -59,7 +64,19 @@ app.post("/{*splat}", async (req, res) => {
     res.status(400).send("Can not upload to file path.")
   }
 
-  // Do uploading stuff here
+  if (req.body?.createFolder) {
+    const folderName = req.body.folderName
+    console.log(`Creating ${folderName} in ${relativePath}`)
+
+    if (!folderPathRegex.test(folderName)) {
+      res.status(400).send("Can not create folder, invalid folder name.")
+      return
+    }
+
+
+    fs.mkdirSync(path.join(storagePath, folderName))
+  }
+
   const bb = busboy({ headers: req.headers })
 
   await new Promise((resolve) => {
