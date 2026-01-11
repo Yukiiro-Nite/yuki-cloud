@@ -1,0 +1,17 @@
+{
+  "name": "yuki-cloud",
+  "version": "0.0.1",
+  "description": "A LAN based cloud service",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./src/server/server.js"
+  },
+  "dependencies": {
+    "busboy": "^1.6.0",
+    "express": "^5.2.1",
+    "mustache": "^4.2.0"
+  }
+}

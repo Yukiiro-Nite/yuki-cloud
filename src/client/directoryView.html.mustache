@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>❄️☁️ - {{path}}</title>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li>
+          <a href="/">/</a>
+        </li>
+        {{#breadcrumbs}}
+        <li>
+          <a href="{{route}}">{{name}}</a>
+        </li>
+        {{/breadcrumbs}}
+      </ul>
+    </nav>
+
+    <h2>Upload</h2>
+    <form method="POST" enctype="multipart/form-data">
+      <input type="file" name="filefield"/>
+      <button>Upload</button>
+    </form>
+
+    <h2>Files</h2>
+    <ul>
+      {{#files}}
+      <li>
+        {{#isDir}}
+        <a href="{{route}}">{{name}}</a>
+        {{/isDir}}
+        {{#isFile}}
+        <a href="{{route}}" download="{{name}}">{{name}}</a>
+        {{/isFile}}
+      </li>
+      {{/files}}
+    </ul>
+  </body>
+</html>
