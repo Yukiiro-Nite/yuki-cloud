@@ -10,9 +10,9 @@ TODO: add instructions
 - [x] Download file
 - [x] See breadcrumbs to previous folders
 - [x] Upload files
-- [ ] Create folder
-- [ ] Delete file
-- [ ] Delete folder
+- [x] Create folder
+- [x] Delete file
+- [x] Delete folder
 - [ ] View file stats
 - [ ] View storage stats
 - [ ] Add CSS style

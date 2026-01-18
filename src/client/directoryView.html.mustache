@@ -19,7 +19,12 @@
 
     <h2>Upload</h2>
     <form method="POST" enctype="multipart/form-data">
-      <input type="file" name="filefield"/>
+      <input
+        type="file"
+        name="filefield"
+        required
+        multiple
+      />
       <input type="checkbox" checked name="createFile" hidden />
       <button>Upload</button>
     </form>
@@ -30,6 +35,7 @@
         type="text"
         name="folderName"
         pattern="^[a-zA-Z0-9\-_ ]+$"
+        required
       >
       <input type="checkbox" checked name="createFolder" hidden />
       <button>Create Folder</button>
@@ -41,9 +47,17 @@
       <li>
         {{#isDir}}
         <a href="/{{route}}">{{name}}</a>
+        <form method="POST" action="/{{route}}">
+          <input type="checkbox" checked name="delete" hidden />
+          <button>🗑️</button>
+        </form>
         {{/isDir}}
         {{#isFile}}
         <a href="/{{route}}" download="{{name}}">{{name}}</a>
+        <form method="POST" action="/{{route}}">
+          <input type="checkbox" checked name="delete" hidden />
+          <button>🗑️</button>
+        </form>
         {{/isFile}}
       </li>
       {{/files}}
