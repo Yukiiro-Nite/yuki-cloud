@@ -13,6 +13,6 @@ TODO: add instructions
 - [x] Create folder
 - [x] Delete file
 - [x] Delete folder
-- [ ] View file stats
-- [ ] View storage stats
+- [x] View file stats
+- [x] View storage stats
 - [ ] Add CSS style

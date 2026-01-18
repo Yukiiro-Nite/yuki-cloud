@@ -4,7 +4,6 @@ import express from 'express'
 
 import { handleGet } from './handlers/handleGet.js'
 import { handlePost } from './handlers/handlePost.js'
-import { handleDelete } from './handlers/handleDelete.js'
 
 const port = process.env.PORT || 3000
 const storageRoot = process.env.STORAGE_ROOT || path.join(process.cwd(), 'storage')

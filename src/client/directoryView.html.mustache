@@ -17,6 +17,29 @@
       </ul>
     </nav>
 
+    {{#stats}}
+    <section>
+      <dl>
+        <dt>System Usage</dt>
+        <dd>
+          <progress
+            max="{{systemTotal}}"
+            value="{{systemUsed}}"
+            title="{{systemUsedDisplay}} of {{systemTotalDisplay}} used. {{systemAvailableDisplay}} available."
+          ></progress>
+        </dd>
+        <dt>Storage Usage</dt>
+        <dd>
+          <progress
+            max="{{storageTotal}}"
+            value="{{storageUsed}}"
+            title="{{storageUsedDisplay}} of {{storageTotalDisplay}} used. {{systemAvailableDisplay}} available."
+          ></progress>
+        </dd>
+      </dl>
+    </section>
+    {{/stats}}
+
     <h2>Upload</h2>
     <form method="POST" enctype="multipart/form-data">
       <input
@@ -47,6 +70,14 @@
       <li>
         {{#isDir}}
         <a href="/{{route}}">{{name}}</a>
+        <dl>
+          <dt>Created At</dt>
+          <dd>{{createdAtDate}}</dd>
+          <dt>Last Modified At</dt>
+          <dd>{{lastModifiedDate}}</dd>
+          <dt>Size</dt>
+          <dd>{{sizeDisplay}}</dd>
+        </dl>
         <form method="POST" action="/{{route}}">
           <input type="checkbox" checked name="delete" hidden />
           <button>🗑️</button>
@@ -54,6 +85,14 @@
         {{/isDir}}
         {{#isFile}}
         <a href="/{{route}}" download="{{name}}">{{name}}</a>
+        <dl>
+          <dt>Created At</dt>
+          <dd>{{createdAtDate}}</dd>
+          <dt>Last Modified At</dt>
+          <dd>{{lastModifiedDate}}</dd>
+          <dt>Size</dt>
+          <dd>{{sizeDisplay}}</dd>
+        </dl>
         <form method="POST" action="/{{route}}">
           <input type="checkbox" checked name="delete" hidden />
           <button>🗑️</button>
